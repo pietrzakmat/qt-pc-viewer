@@ -108,7 +108,8 @@ void ViewerWindow::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-    m_camera_gl->set_standard_uniforms(m_pointcloud_object->get_shader_program(), QMatrix4x4());
+    const QMatrix4x4& model_pc = m_pointcloud_object->get_model_mat();
+    m_camera_gl->set_standard_uniforms(m_pointcloud_object->get_shader_program(), model_pc);
     m_pointcloud_object->draw(m_pointcloud_object->m_point_size);
 
     if (m_ground_grid_object) {

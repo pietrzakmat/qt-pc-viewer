@@ -9,6 +9,19 @@ void GLPointCloudObject::initialize_gl()
     m_initialized = true;
 }
 
+
+QMatrix4x4 GLPointCloudObject::get_model_mat()
+{
+    QMatrix4x4 m;
+    m.translate(m_offset);
+    m.scale(m_scale);
+    m.rotate(m_rotate.x(), 1,0,0);
+    m.rotate(m_rotate.y(), 0,1,0);
+    m.rotate(m_rotate.z(), 0,0,1);
+
+    return m;
+}
+
 void GLPointCloudObject::draw(const float point_size)
 {
     if (!m_initialized || !m_shader) {
@@ -53,7 +66,18 @@ void GLPointCloudObject::set_points(const graphics::VertexData &vertex_data)
         vbo_position->create();
         vbo_position->bind();
         vbo_position->setUsagePattern(QOpenGLBuffer::StaticDraw);
-        vbo_position->allocate(vertex_data.positions.data(), static_cast<int>(vertex_data.positions.size() * sizeof (QVector3D))); // allocate with writing
+        if (m_x_inversion || m_y_inversion || m_z_inversion) { // inverse x,y,z
+            std::vector<QVector3D> positions; positions.reserve(positions.size());
+            const float factor_x = m_x_inversion ? -1.F : 1.F;
+            const float factor_y = m_y_inversion ? -1.F : 1.F;
+            const float factor_z = m_z_inversion ? -1.F : 1.F;
+            for (const auto &p : vertex_data.positions) {
+                positions.emplace_back(factor_x*p.x(), factor_y*p.y(), factor_z*p.z());
+            }
+            vbo_position->allocate(positions.data(), static_cast<int>(positions.size() * sizeof (QVector3D))); // allocate with writing
+        } else {
+            vbo_position->allocate(vertex_data.positions.data(), static_cast<int>(vertex_data.positions.size() * sizeof (QVector3D))); // allocate with writing
+        }
         m_shader->setAttributeBuffer("vertex_position", GL_FLOAT, 0, 3);
         m_shader->enableAttributeArray("vertex_position");
         vbo_position->release();

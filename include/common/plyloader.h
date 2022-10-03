@@ -85,15 +85,12 @@ inline bool write_ply(const std::string& filename, const VertexData& vertex_data
          tinyply::Type::FLOAT32, vertex_data.positions.size(), (std::uint8_t*)(vertex_data.positions.data()), tinyply::Type::INVALID, 0);
 
     ply_file.add_properties_to_element("vertex", { "red", "green", "blue", "alpha" },
-//        tinyply::Type::FLOAT32, vertex_data.colors.size(), reinterpret_cast<std::uint8_t*>(vertex_data.triangles.data()), tinyply::Type::INVALID, 0);
           tinyply::Type::FLOAT32, vertex_data.colors.size(), (std::uint8_t*)(vertex_data.colors.data()), tinyply::Type::INVALID, 0);
 
     ply_file.add_properties_to_element("vertex", { "nx", "ny", "nz" },
-//        tinyply::Type::FLOAT32, vertex_data.normals.size(), reinterpret_cast<std::uint8_t*>(vertex_data.normals.data()), tinyply::Type::INVALID, 0);
           tinyply::Type::FLOAT32, vertex_data.normals.size(), (std::uint8_t*)(vertex_data.normals.data()), tinyply::Type::INVALID, 0);
 
     ply_file.add_properties_to_element("vertex", { "u", "v" },
-//        tinyply::Type::FLOAT32, vertex_data.tex_coords.size() , reinterpret_cast<std::uint8_t*>(vertex_data.tex_coords.data()), tinyply::Type::INVALID, 0);
           tinyply::Type::FLOAT32, vertex_data.tex_coords.size() , (std::uint8_t*)(vertex_data.tex_coords.data()), tinyply::Type::INVALID, 0);
 
 

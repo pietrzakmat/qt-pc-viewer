@@ -18,6 +18,9 @@ class GLPointCloudObject
 {
 public:
     float m_point_size {1.F};
+    bool m_x_inversion {false};
+    bool m_y_inversion {false};
+    bool m_z_inversion {false};
     bool m_inverse_depth_colors {false};
     bool m_use_original_colors {true};
 
@@ -37,7 +40,13 @@ public:
 
     void set_points(const graphics::VertexData &vertex_data);
 
-   float m_thresh = 0.1F;
+    float m_thresh = 0.1F;
+
+    QVector3D m_scale {1,1,1};
+    QVector3D m_offset {0,0,0};
+    QVector3D m_rotate {0,0,0};
+
+    QMatrix4x4 get_model_mat();
 
 private:
     bool m_initialized {false};
@@ -67,7 +76,7 @@ GLPointCloudObject::find_min_max(const std::vector<QVector3D> &points, const flo
     if (min < 0) min*=-1;
     if (max < 0) max*=-1;
 
-//    max*=thresh;
+    //    max*=thresh;
 
     return {min*(1.0F + thresh), max*(1.0F - thresh)};
 }
@@ -77,7 +86,7 @@ GLPointCloudObject::get_map_factor(const std::vector<QVector3D> &points, const f
 {
     auto [min, max] = find_min_max(points, thresh);
     float div = qFuzzyIsNull(max + min) ? 0.001F : (max + min);
-//    float div = (max + min) == 0 ? 0.001f : (max + min);
+    //    float div = (max + min) == 0 ? 0.001f : (max + min);
     return 1.F / div;
 }
 
