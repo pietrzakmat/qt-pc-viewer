@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QApplication>
+#include <QMessageBox>
 #include <QTimer>
 
 #include "viewerwindow.h"
@@ -20,6 +21,7 @@ public:
     void create_menu_bar();
     void create_rendering_dialog();
     void create_pc_control_dialog();
+    void create_about_dialog();
 
 public slots:
     void open_file_dialog();
@@ -36,6 +38,7 @@ private:
     std::unique_ptr<ViewerWindow> m_gl_window {nullptr};
     RenderingDialog* m_rendering_dialog {nullptr};
     PointControlDialog* m_plycontrol_dialog {nullptr};
+    QMessageBox* m_about_dialog {nullptr};
 };
 
 inline
@@ -62,6 +65,20 @@ void MainWindow::update_stats()
     setWindowTitle(QString("%1 - %2").arg(QString::fromStdString(m_gl_window->m_path_file)).arg(m_title)
                    + " | FPS: " + QString::number(m_gl_window->fps(), 'f', 1)
                    + " ("  + QString::number(m_gl_window->render_time(), 'f', 1)+ " ms)");
+}
+
+inline void MainWindow::create_about_dialog()
+{
+    QString t =  tr("Qt Point Cloud Viewer");
+    t.append("\nCopyright (c) 2022 Mateusz Pietrzak (MIT License)");
+    t.append("\n\nBuild with Qt version: ");
+    t.append(qVersion());
+
+    t.append("\n\nAcknowledgements:");
+    t.append("\n1. Tinycolormap. Author: Yuki Koyama (2018, MIT)");
+    t.append("\n2. Tinyply. Author: Dimitri Diakopoulos (public domain)");
+
+    QMessageBox::about(this, "About Qt-pc-viewer", t);
 }
 
 inline

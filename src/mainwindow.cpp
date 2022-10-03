@@ -88,6 +88,11 @@ void MainWindow::create_menu_bar()
     QAction *point_cloud_control = new QAction(tr("&Point Cloud Control"), fileMenu);
     settingsMenu->addAction(point_cloud_control);
     connect(point_cloud_control, &QAction::triggered, this, &MainWindow::create_pc_control_dialog);
+
+    QMenu *helpMenu = menuBar->addMenu(tr("&Help"));
+    QAction *aboutDialog = new QAction(tr("&About"), helpMenu);
+    helpMenu->addAction(aboutDialog);
+    connect(aboutDialog, &QAction::triggered, this, &MainWindow::create_about_dialog);
 }
 
 void MainWindow::open_file_dialog()
