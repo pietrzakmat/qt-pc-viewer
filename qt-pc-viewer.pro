@@ -38,10 +38,6 @@ HEADERS += \
     include/common/graphics_math.hpp \
     include/common/opengl_helper.hpp \
     include/common/camera.h \
-#    include/common/viewcontroller.h \
-#    include/common/arcballviewcontroller.h \
-#    include/common/fpsviewcontroller.h \
-#    include/common/targetballviewcontroller.h \
     include/gl/glbasisobject.h \
     include/gl/glpointcloudobject.h \
     include/gl/glpointobject.h \
