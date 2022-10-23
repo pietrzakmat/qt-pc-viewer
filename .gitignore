@@ -3,16 +3,8 @@ bin/*
 lib/*
 scripts/*.pgm
 scripts/*.png
-!lib/libmath.a
-!lib/libgps.a
 log/*
 build*
 *.pro.user*
 
 images/*
-
-config/ugv/cdplayback\.ini
-
-config/ugv/display\.ini
-
-config/ugv/vmap3d\.ini
