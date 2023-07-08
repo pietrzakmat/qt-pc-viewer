@@ -78,6 +78,7 @@ public:
 
 inline bool write_ply(const std::string& filename, const VertexData& vertex_data, const bool is_binary = true)
 {
+    std::setlocale(LC_ALL, "C");
     tinyply::PlyFile ply_file;
 
     ply_file.add_properties_to_element("vertex", { "x", "y", "z" },
@@ -105,6 +106,7 @@ inline bool write_ply(const std::string& filename, const VertexData& vertex_data
 
 inline VertexData read_ply(const std::string& file_name, const bool preload_into_memory = true)
 {
+    std::setlocale(LC_ALL, "C");
     VertexData vertex_data;
 
     std::cout << "........................................................................\n";
